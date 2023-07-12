@@ -41,7 +41,8 @@ import {
 import { primeLocalization } from './services/localization-fetcher';
 import VideoDisappearedHandler from './handlers/video/video-disappeared-handler';
 
-chrome.storage.session.setAccessLevel({ accessLevel: 'TRUSTED_AND_UNTRUSTED_CONTEXTS' });
+// TODO: This throws in Firefox because setAccessLevel is not yet implemented: https://bugzilla.mozilla.org/show_bug.cgi?id=1823717
+//chrome.storage.session.setAccessLevel({ accessLevel: 'TRUSTED_AND_UNTRUSTED_CONTEXTS' });
 
 const settings = new Settings();
 

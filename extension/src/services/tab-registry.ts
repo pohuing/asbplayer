@@ -347,7 +347,8 @@ export default class TabRegistry {
             chrome.tabs.create(
                 {
                     active: false,
-                    selected: false,
+                    /// TODO: this parameter causes the tab creation to fail on firefox. Considering this has been deprecated for over 9 years now, is this really necessary?
+                    //selected: false,
                     url: await this.settings.getSingle('asbplayerUrl'),
                     index: activeTabIndex,
                 },

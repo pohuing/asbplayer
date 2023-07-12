@@ -1,4 +1,4 @@
-import FrameBridgeClient, { FetchOptions } from './frame-bridge-client';
+import FrameBridgeClient, {FetchOptions} from './frame-bridge-client';
 
 export default class UiFrame {
     private readonly _html: (lang: string) => Promise<string>;
@@ -61,10 +61,14 @@ export default class UiFrame {
         this._frame.style.colorScheme = 'normal';
         this._client = new FrameBridgeClient(this._frame, this._fetchOptions);
         document.body.appendChild(this._frame);
-        const doc = this._frame.contentDocument!;
-        doc.open();
-        doc.write(await this._html(this._language));
-        doc.close();
+        // TODO: the open write close model is severely broken cross browser. Firefox will deny the open calls because it violates Cross Source constraints
+        // TODO: I'm not sure if srcdoc has any meaningfully different sideeffects
+        // See warning on MDN https://developer.mozilla.org/en-US/docs/Web/API/Document/write
+        //const doc = this._frame.contentDocument!;
+        //doc.open();
+        //doc.write(await this._html(this._language));
+        //doc.close();
+        this._frame.srcdoc = await this._html(this._language)
         await this._client!.bind();
         return true;
     }
